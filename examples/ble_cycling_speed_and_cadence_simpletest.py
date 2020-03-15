@@ -11,7 +11,7 @@ from adafruit_ble.services.standard.device_info import DeviceInfoService
 from adafruit_ble_cycling_speed_and_cadence import CyclingSpeedAndCadenceService
 
 # PyLint can't find BLERadio for some reason so special case it here.
-ble = adafruit_ble.BLERadio()    # pylint: disable=no-member
+ble = adafruit_ble.BLERadio()  # pylint: disable=no-member
 
 
 while True:

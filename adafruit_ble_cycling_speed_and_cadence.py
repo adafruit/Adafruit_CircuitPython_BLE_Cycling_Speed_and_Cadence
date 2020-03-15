@@ -54,10 +54,13 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_BLE_Cycling_Speed
 
 CSCMeasurementValues = namedtuple(
     "CSCMeasurementValues",
-    ("cumulative_wheel_revolutions",
-     "last_wheel_event_time",
-     "cumulative_crank_revolutions",
-     "last_crank_event_time"))
+    (
+        "cumulative_wheel_revolutions",
+        "last_wheel_event_time",
+        "cumulative_crank_revolutions",
+        "last_crank_event_time",
+    ),
+)
 """Namedtuple for measurement values.
 
 .. py:attribute:: CSCMeasurementValues.cumulative_wheel_revolutions
@@ -83,8 +86,10 @@ For example::
     wheel_revs = svc.csc_measurement_values.cumulative_wheel_revolutions
 """
 
+
 class _CSCMeasurement(ComplexCharacteristic):
     """Notify-only characteristic of speed and cadence data."""
+
     uuid = StandardUUID(0x2A5B)
 
     def __init__(self):
@@ -107,19 +112,36 @@ class CyclingSpeedAndCadenceService(Service):
     # Mandatory.
     csc_measurement = _CSCMeasurement()
 
-    csc_feature = Uint8Characteristic(uuid=StandardUUID(0x2A5C),
-                                      properties=Characteristic.READ)
-    sensor_location = Uint8Characteristic(uuid=StandardUUID(0x2A5D),
-                                          properties=Characteristic.READ)
+    csc_feature = Uint8Characteristic(
+        uuid=StandardUUID(0x2A5C), properties=Characteristic.READ
+    )
+    sensor_location = Uint8Characteristic(
+        uuid=StandardUUID(0x2A5D), properties=Characteristic.READ
+    )
 
-    sc_control_point = Characteristic(uuid=StandardUUID(0x2A39),
-                                      properties=Characteristic.WRITE)
+    sc_control_point = Characteristic(
+        uuid=StandardUUID(0x2A39), properties=Characteristic.WRITE
+    )
 
-    _SENSOR_LOCATIONS = ("Other", "Top of shoe", "In shoe", "Hip",
-                         "Front Wheel", "Left Crank", "Right Crank",
-                         "Left Pedal", "Right Pedal", "Front Hub",
-                         "Rear Dropout", "Chainstay", "Rear Wheel",
-                         "Rear Hub", "Chest", "Spider", "Chain Ring")
+    _SENSOR_LOCATIONS = (
+        "Other",
+        "Top of shoe",
+        "In shoe",
+        "Hip",
+        "Front Wheel",
+        "Left Crank",
+        "Right Crank",
+        "Left Pedal",
+        "Right Pedal",
+        "Front Hub",
+        "Rear Dropout",
+        "Chainstay",
+        "Rear Wheel",
+        "Rear Hub",
+        "Chest",
+        "Spider",
+        "Chain Ring",
+    )
 
     def __init__(self, service=None):
         super().__init__(service=service)
@@ -186,6 +208,7 @@ class CyclingSpeedAndCadenceService(Service):
             return self._SENSOR_LOCATIONS[self.sensor_location]
         except IndexError:
             return "InvalidLocation"
+
 
 #    def set_cumulative_wheel_revolutions(self, value):
 #        self._control_point_request(self.pack("<BLBB", 1, value, 0, )
