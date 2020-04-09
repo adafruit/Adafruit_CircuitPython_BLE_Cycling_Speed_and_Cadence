@@ -63,20 +63,20 @@ CSCMeasurementValues = namedtuple(
 )
 """Namedtuple for measurement values.
 
-.. py:attribute:: CSCMeasurementValues.cumulative_wheel_revolutions
+.. :attribute:: cumulative_wheel_revolutions:
 
         Cumulative wheel revolutions (int).
 
-.. py:attribute:: CSCMeasurementValues.last_wheel_event_time
+.. :attribute:: last_wheel_event_time:
 
         Time (int), units in 1024ths of a second, when last wheel event was measured.
         This is a monotonically increasing clock value, not an interval.
 
-.. py:attribute:: CSCMeasurementValues.cumulative_crank_revolutions
+.. :attribute:: cumulative_crank_revolutions:
 
         Cumulative crank revolutions (int).
 
-.. py:attribute:: CSCMeasurementValues.last_crank_event_time
+.. :attribute:: last_crank_event_time:
 
         Time (int), units in 1024ths of a second, when last crank event was measured.
         This is a monotonically increasing clock value, not an interval.
