@@ -63,20 +63,20 @@ CSCMeasurementValues = namedtuple(
 )
 """Namedtuple for measurement values.
 
-.. py:attribute:: CSCMeasurementValues.cumulative_wheel_revolutions
+.. :attribute:: cumulative_wheel_revolutions:
 
         Cumulative wheel revolutions (int).
 
-.. py:attribute:: CSCMeasurementValues.last_wheel_event_time
+.. :attribute:: last_wheel_event_time:
 
         Time (int), units in 1024ths of a second, when last wheel event was measured.
         This is a monotonically increasing clock value, not an interval.
 
-.. py:attribute:: CSCMeasurementValues.cumulative_wheel_revolutions
+.. :attribute:: cumulative_crank_revolutions:
 
         Cumulative crank revolutions (int).
 
-.. py:attribute:: CSCMeasurementValues.last_wheel_event_time
+.. :attribute:: last_crank_event_time:
 
         Time (int), units in 1024ths of a second, when last crank event was measured.
         This is a monotonically increasing clock value, not an interval.
@@ -145,7 +145,9 @@ class CyclingSpeedAndCadenceService(Service):
 
     def __init__(self, service=None):
         super().__init__(service=service)
-        self._measurement_buf = bytearray(self.csc_measurement.packet_size) #pylint: disable=no-member
+        self._measurement_buf = bytearray(
+            self.csc_measurement.packet_size  # pylint: disable=no-member
+        )
 
     @property
     def measurement_values(self):
@@ -168,7 +170,7 @@ class CyclingSpeedAndCadenceService(Service):
         #
 
         buf = self._measurement_buf
-        packet_length = self.csc_measurement.readinto(buf) #pylint: disable=no-member
+        packet_length = self.csc_measurement.readinto(buf)  # pylint: disable=no-member
         if packet_length == 0:
             return None
         flags = buf[0]
