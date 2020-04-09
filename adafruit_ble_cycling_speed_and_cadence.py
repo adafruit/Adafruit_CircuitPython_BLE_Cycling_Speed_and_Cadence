@@ -146,8 +146,8 @@ class CyclingSpeedAndCadenceService(Service):
     def __init__(self, service=None):
         super().__init__(service=service)
         self._measurement_buf = bytearray(
-            self.csc_measurement.packet_size
-        )  # pylint: disable=no-member
+            self.csc_measurement.packet_size  # pylint: disable=no-member
+        )
 
     @property
     def measurement_values(self):
