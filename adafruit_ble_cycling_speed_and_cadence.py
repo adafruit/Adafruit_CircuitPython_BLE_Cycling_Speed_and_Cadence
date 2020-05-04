@@ -145,9 +145,8 @@ class CyclingSpeedAndCadenceService(Service):
 
     def __init__(self, service=None):
         super().__init__(service=service)
-        self._measurement_buf = bytearray(
-            self.csc_measurement.packet_size  # pylint: disable=no-member
-        )
+        # Defer creating buffer until we're definitely connected.
+        self._measurement_buf = None
 
     @property
     def measurement_values(self):
@@ -169,6 +168,10 @@ class CyclingSpeedAndCadenceService(Service):
         #   uint16: Last Crank Event Time, in 1024ths of a second
         #
 
+        if self._measurement_buf is None:
+            self._measurement_buf = bytearray(
+                self.csc_measurement.incoming_packet_length  # pylint: disable=no-member
+            )
         buf = self._measurement_buf
         packet_length = self.csc_measurement.readinto(buf)  # pylint: disable=no-member
         if packet_length == 0:
