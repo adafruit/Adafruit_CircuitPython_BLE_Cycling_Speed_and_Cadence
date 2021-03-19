@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2020 Dan Halbert for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
 """
 Read cycling speed and cadence data from a peripheral using the standard BLE
 Cycling Speed and Cadence (CSC) Service.
