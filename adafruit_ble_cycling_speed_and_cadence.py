@@ -33,7 +33,7 @@ from adafruit_ble.characteristics import Characteristic, ComplexCharacteristic
 from adafruit_ble.characteristics.int import Uint8Characteristic
 
 try:
-    from typing import Optional, Type
+    from typing import Optional
 except ImportError:
     pass
 
@@ -137,7 +137,7 @@ class CyclingSpeedAndCadenceService(Service):
         self._measurement_buf = None
 
     @property
-    def measurement_values(self) -> Optional[Type[CSCMeasurementValues]]:
+    def measurement_values(self) -> Optional[CSCMeasurementValues]:
         """All the measurement values, returned as a CSCMeasurementValues
         namedtuple.
 
