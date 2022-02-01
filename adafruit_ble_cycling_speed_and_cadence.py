@@ -32,6 +32,11 @@ from adafruit_ble.uuid import StandardUUID
 from adafruit_ble.characteristics import Characteristic, ComplexCharacteristic
 from adafruit_ble.characteristics.int import Uint8Characteristic
 
+try:
+    from typing import Optional, Type
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_BLE_Cycling_Speed_and_Cadence.git"
 
@@ -75,10 +80,10 @@ class _CSCMeasurement(ComplexCharacteristic):
 
     uuid = StandardUUID(0x2A5B)
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(properties=Characteristic.NOTIFY)
 
-    def bind(self, service):
+    def bind(self, service: "CyclingSpeedAndCadenceService") -> _bleio.PacketBuffer:
         """Bind to a CyclingSpeedAndCadenceService."""
         bound_characteristic = super().bind(service)
         bound_characteristic.set_cccd(notify=True)
@@ -126,13 +131,13 @@ class CyclingSpeedAndCadenceService(Service):
         "Chain Ring",
     )
 
-    def __init__(self, service=None):
+    def __init__(self, service: Optional[Service] = None) -> None:
         super().__init__(service=service)
         # Defer creating buffer until we're definitely connected.
         self._measurement_buf = None
 
     @property
-    def measurement_values(self):
+    def measurement_values(self) -> Optional[Type[CSCMeasurementValues]]:
         """All the measurement values, returned as a CSCMeasurementValues
         namedtuple.
 
@@ -179,7 +184,7 @@ class CyclingSpeedAndCadenceService(Service):
         return CSCMeasurementValues(wheel_revs, wheel_time, crank_revs, crank_time)
 
     @property
-    def location(self):
+    def location(self) -> str:
         """The location of the sensor on the cycle, as a string.
 
         Possible values are:
