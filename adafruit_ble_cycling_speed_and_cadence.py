@@ -131,7 +131,9 @@ class CyclingSpeedAndCadenceService(Service):
         "Chain Ring",
     )
 
-    def __init__(self, service: Optional["CyclingSpeedAndCadenceService"] = None) -> None:
+    def __init__(
+        self, service: Optional["CyclingSpeedAndCadenceService"] = None
+    ) -> None:
         super().__init__(service=service)
         # Defer creating buffer until we're definitely connected.
         self._measurement_buf = None
