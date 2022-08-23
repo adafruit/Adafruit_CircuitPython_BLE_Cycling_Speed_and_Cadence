@@ -44,8 +44,14 @@ master_doc = "index"
 
 # General information about the project.
 project = "Adafruit BLE_Cycling_Speed_and_Cadence Library"
+creation_year = "2020"
 current_year = str(datetime.datetime.now().year)
-copyright = current_year + " Adafruit Industries"
+year_duration = (
+    current_year
+    if current_year == creation_year
+    else creation_year + " - " + current_year
+)
+copyright = year_duration + " Adafruit Industries"
 author = "Adafruit Industries"
 
 # The version info for the project you're documenting, acts as replacement for
