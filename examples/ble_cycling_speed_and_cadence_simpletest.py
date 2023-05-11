@@ -56,7 +56,6 @@ while True:
     # Get CSC Service from each sensor.
     cyc_services = []
     for conn in cyc_connections:
-
         cyc_services.append(conn[CyclingSpeedAndCadenceService])
 
     # Read data from each sensor once a second.
