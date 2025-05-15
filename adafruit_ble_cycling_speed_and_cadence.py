@@ -23,14 +23,15 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 * Adafruit's BLE library: https://github.com/adafruit/Adafruit_CircuitPython_BLE
 """
+
 import struct
 from collections import namedtuple
 
 import _bleio
-from adafruit_ble.services import Service
-from adafruit_ble.uuid import StandardUUID
 from adafruit_ble.characteristics import Characteristic, ComplexCharacteristic
 from adafruit_ble.characteristics.int import Uint8Characteristic
+from adafruit_ble.services import Service
+from adafruit_ble.uuid import StandardUUID
 
 try:
     from typing import Optional
@@ -100,16 +101,10 @@ class CyclingSpeedAndCadenceService(Service):
     # Mandatory.
     csc_measurement = _CSCMeasurement()
 
-    csc_feature = Uint8Characteristic(
-        uuid=StandardUUID(0x2A5C), properties=Characteristic.READ
-    )
-    sensor_location = Uint8Characteristic(
-        uuid=StandardUUID(0x2A5D), properties=Characteristic.READ
-    )
+    csc_feature = Uint8Characteristic(uuid=StandardUUID(0x2A5C), properties=Characteristic.READ)
+    sensor_location = Uint8Characteristic(uuid=StandardUUID(0x2A5D), properties=Characteristic.READ)
 
-    sc_control_point = Characteristic(
-        uuid=StandardUUID(0x2A39), properties=Characteristic.WRITE
-    )
+    sc_control_point = Characteristic(uuid=StandardUUID(0x2A39), properties=Characteristic.WRITE)
 
     _SENSOR_LOCATIONS = (
         "Other",
@@ -131,9 +126,7 @@ class CyclingSpeedAndCadenceService(Service):
         "Chain Ring",
     )
 
-    def __init__(
-        self, service: Optional["CyclingSpeedAndCadenceService"] = None
-    ) -> None:
+    def __init__(self, service: Optional["CyclingSpeedAndCadenceService"] = None) -> None:
         super().__init__(service=service)
         # Defer creating buffer until we're definitely connected.
         self._measurement_buf = None
@@ -159,11 +152,9 @@ class CyclingSpeedAndCadenceService(Service):
         #
 
         if self._measurement_buf is None:
-            self._measurement_buf = bytearray(
-                self.csc_measurement.incoming_packet_length  # pylint: disable=no-member
-            )
+            self._measurement_buf = bytearray(self.csc_measurement.incoming_packet_length)
         buf = self._measurement_buf
-        packet_length = self.csc_measurement.readinto(buf)  # pylint: disable=no-member
+        packet_length = self.csc_measurement.readinto(buf)
         if packet_length == 0:
             return None
         flags = buf[0]
